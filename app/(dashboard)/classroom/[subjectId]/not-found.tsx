@@ -16,7 +16,7 @@ export default function SubjectNotFound() {
         </p>
         <Link
           href="/classroom"
-          className="inline-flex h-9 items-center justify-center rounded-lg bg-[var(--accent)] px-4 text-sm font-medium text-white no-underline transition-colors duration-150 hover:bg-[var(--accent-hover)]"
+          className="inline-flex h-9 items-center justify-center rounded-lg bg-[hsl(var(--accent))] px-4 text-sm font-medium text-white no-underline transition-colors duration-150 hover:bg-[hsl(var(--accent-hover))]"
         >
           Back to Classroom Hub
         </Link>

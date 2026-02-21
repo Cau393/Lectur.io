@@ -12,7 +12,7 @@ const navLinkBase =
 const navLinkInactive =
   'text-[var(--text-muted)] hover:bg-[var(--bg-hover)] hover:text-[var(--text-primary)]';
 const navLinkActive =
-  'bg-[var(--accent-subtle)] text-[var(--accent)] font-medium';
+  'bg-[var(--accent-subtle)] text-[hsl(var(--accent))] font-medium';
 
 function isActive(pathname: string, href: string): boolean {
   if (href === '/dashboard') return pathname === '/dashboard';

@@ -1,12 +1,6 @@
 export default function ActiveClassLoading() {
   return (
-    <div className="fixed inset-0 flex flex-col bg-[var(--bg-base)]">
-      <header className="shrink-0 border-b border-[var(--bg-border)] bg-[var(--bg-surface)] px-6 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="h-4 w-32 rounded bg-[var(--bg-overlay)] animate-pulse" />
-          <div className="h-3 w-16 rounded bg-[var(--bg-overlay)] animate-pulse" />
-        </div>
-      </header>
+    <div className="fixed inset-0 flex flex-col bg-[var(--bg-base)] pt-[6rem]">
       <main className="flex-1 overflow-auto flex flex-col items-center justify-center px-6 py-12">
         <div className="w-full max-w-[900px] space-y-6">
           <div className="h-9 w-3/4 max-w-md rounded bg-[var(--bg-overlay)] animate-pulse" />
