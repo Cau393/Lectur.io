@@ -1,6 +1,6 @@
 // Layer: UI
-// Type: Server Component — data fetching only
-// RLS: getSubjects() filters by user_id via RLS
+// Type: Server Component — will fetch data
+// RLS: Will fetch subjects via RLS
 
 import Link from 'next/link';
 import { getSubjects } from '@/lib/supabase/subjects';

@@ -1,11 +1,14 @@
 // Layer: UI
 // Type: Server Component — data fetch; client used for Play placeholder if needed
-// RLS: getSubjectById / getClassesBySubjectId enforce user ownership
+// RLS: Fetches class via RLS
 
-import { notFound } from 'next/navigation';
-import Link from 'next/link';
-import { getSubjectById, getClassesBySubjectId, type Class } from '@/lib/supabase/subjects';
 import { ActiveClassView } from '@/components/active-class-view';
+import {
+  getSubjectById,
+  getClassesBySubjectId,
+} from '@/lib/supabase/subjects';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
 type ActiveClassPageProps = {
   params: Promise<{ subjectId: string; classId: string }>;
