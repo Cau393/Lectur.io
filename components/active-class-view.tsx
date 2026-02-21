@@ -27,7 +27,7 @@ export function ActiveClassView({ cls }: ActiveClassViewProps) {
               </li>
             ))}
           </ul>
-          <div className="mt-12 flex justify-center">
+          <div className="mt-12 flex flex-col items-center gap-3">
             <button
               type="button"
               onClick={() => setPlayStarted(true)}
@@ -35,12 +35,12 @@ export function ActiveClassView({ cls }: ActiveClassViewProps) {
             >
               Play
             </button>
+            {playStarted && (
+              <p className="text-center text-sm text-[var(--text-muted)]">
+                Voice will start here (WebRTC coming soon)
+              </p>
+            )}
           </div>
-          {playStarted && (
-            <p className="mt-6 text-center text-sm text-[var(--text-muted)]">
-              Voice will start here (WebRTC coming soon)
-            </p>
-          )}
         </div>
       </main>
       <footer className="shrink-0 border-t border-[var(--bg-border)] bg-[var(--bg-surface)]/80 backdrop-blur-sm px-6 py-4">

@@ -1,36 +1,21 @@
 // Layer: UI
-// Type: Server Component — auth check and layout shell; nav is client for pathname
-// RLS: layout only checks auth; pages fetch via lib/supabase
-// TODO: Re-enable auth redirect when done with temporary unauthenticated access
+// Type: Server Component — layout shell; nav is client for pathname
+// RLS: pages fetch via lib/supabase; auth is optional (未ログインでも表示可)
 
-import Link from 'next/link';
-import { DashboardSidebar } from '@/components/dashboard-sidebar';
+import { Sidebar } from '@/components/dashboard/Sidebar';
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // Temporarily allow unauthenticated access to dashboard
-  // const supabase = await createClient();
-  // const { data: { user } } = await supabase.auth.getUser();
-  // if (!user) redirect('/login');
-
   return (
     <div className="flex min-h-screen bg-[var(--bg-base)]">
-      <aside
-        className="sticky top-0 h-screen w-60 shrink-0 border-r border-[var(--bg-border)] bg-[var(--bg-surface)] py-6 px-3 flex flex-col gap-6"
-        aria-label="Main navigation"
-      >
-        <Link
-          href="/dashboard"
-          className="px-3 text-lg font-semibold tracking-tight text-[var(--text-primary)] no-underline"
-        >
-          Lectur.io
-        </Link>
-        <DashboardSidebar />
-      </aside>
-      <main className="flex-1 overflow-auto">{children}</main>
+      <Sidebar />
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <header className="shrink-0 border-b border-[var(--bg-border)] bg-[var(--bg-surface)] px-6 py-3" />
+        <main className="flex-1 overflow-auto">{children}</main>
+      </div>
     </div>
   );
 }

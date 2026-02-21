@@ -2,9 +2,10 @@
 // Type: Server Component — data fetching; client used for Generate Homework action
 // RLS: getSubjectById / getClassesBySubjectId enforce user ownership
 
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
 import { getSubjectById, getClassesBySubjectId, type Class } from '@/lib/supabase/subjects';
+import { getCurrentUser } from '@/lib/supabase/auth';
 import { GenerateHomeworkButton } from '@/components/generate-homework-button';
 
 type SubjectDetailPageProps = {
@@ -13,6 +14,9 @@ type SubjectDetailPageProps = {
 
 export default async function SubjectDetailPage({ params }: SubjectDetailPageProps) {
   const { subjectId } = await params;
+  const user = await getCurrentUser();
+  if (!user) redirect('/login');
+
   const [subject, classes] = await Promise.all([
     getSubjectById(subjectId),
     getClassesBySubjectId(subjectId),
