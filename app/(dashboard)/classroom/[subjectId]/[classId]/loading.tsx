@@ -2,7 +2,7 @@ export default function ActiveClassLoading() {
   return (
     <div className="fixed inset-0 flex flex-col bg-[var(--bg-base)]">
       <header className="shrink-0 border-b border-[var(--bg-border)] bg-[var(--bg-surface)] px-6 py-4">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="h-4 w-32 rounded bg-[var(--bg-overlay)] animate-pulse" />
           <div className="h-3 w-16 rounded bg-[var(--bg-overlay)] animate-pulse" />
         </div>
@@ -24,7 +24,7 @@ export default function ActiveClassLoading() {
         </div>
       </main>
       <footer className="shrink-0 border-t border-[var(--bg-border)] bg-[var(--bg-surface)]/80 backdrop-blur-sm px-6 py-4">
-        <div className="max-w-6xl mx-auto flex items-center justify-center">
+        <div className="max-w-7xl mx-auto flex items-center justify-center">
           <div className="h-4 w-40 rounded bg-[var(--bg-overlay)] animate-pulse" />
         </div>
       </footer>

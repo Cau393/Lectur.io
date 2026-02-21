@@ -14,7 +14,6 @@ import {
 import { AddSubjectForm } from '@/components/dashboard/AddSubjectForm';
 import {
   getCurrentUser,
-  getCurrentUserProfile,
   getSubjects,
   getClassesBySubjectId,
   type Class,
@@ -22,35 +21,14 @@ import {
 
 const RECENT_SUBJECTS_LIMIT = 5;
 
-function formatTotalDuration(totalMinutes: number): string {
-  if (totalMinutes < 60) return `${totalMinutes}m`;
-  const h = Math.floor(totalMinutes / 60);
-  const m = totalMinutes % 60;
-  return m > 0 ? `${h}h ${m}m` : `${h}h`;
-}
-
 export default async function DashboardPage() {
   const user = await getCurrentUser();
   if (!user) redirect('/login');
 
-  const [profile, subjects] = await Promise.all([
-    getCurrentUserProfile(),
-    getSubjects(),
-  ]);
+  const subjects = await getSubjects();
 
   const classesPerSubject: Class[][] = await Promise.all(
     subjects.map((s) => getClassesBySubjectId(s.id))
-  );
-
-  const totalClasses = classesPerSubject.reduce((sum, classes) => sum + classes.length, 0);
-  const totalMinutes = classesPerSubject.reduce(
-    (sum, classes) => sum + classes.reduce((s, c) => s + c.duration_minutes, 0),
-    0
-  );
-  const withHomework = classesPerSubject.reduce(
-    (sum, classes) =>
-      sum + classes.filter((c) => Boolean(c.homework_markdown?.trim())).length,
-    0
   );
 
   const recentSubjects = subjects.slice(0, RECENT_SUBJECTS_LIMIT);
@@ -58,21 +36,17 @@ export default async function DashboardPage() {
     (classes) => classes.length
   );
 
-  const greeting = profile?.full_name?.trim()
-    ? `Welcome back, ${profile.full_name}`
-    : 'Welcome back';
+  const greeting = 'Welcome back';
 
   return (
-    <div className="max-w-6xl mx-auto px-8 py-12">
+    <div className="max-w-7xl mx-auto px-8 py-12">
       <h1 className="text-3xl font-semibold tracking-tight text-[var(--accent)] mb-2">
         {greeting}
       </h1>
 
       {subjects.length > 0 && (
-        <p className="text-sm text-[var(--text-muted)] mb-8">
-          {subjects.length} subject{subjects.length !== 1 ? 's' : ''} · {totalClasses} classes
-          · {formatTotalDuration(totalMinutes)} total
-          {withHomework > 0 && ` · ${withHomework} with homework`}
+        <p className="text-base text-[var(--text-muted)] mb-8">
+          AI creates classes tailored to what you want to learn.
         </p>
       )}
 
@@ -83,7 +57,7 @@ export default async function DashboardPage() {
           </p>
           <Card className="max-w-xl rounded-xl border-[var(--border-card)] bg-[var(--bg-surface)] p-6 shadow-[var(--shadow-card)] transition-all duration-200 ease-out">
             <CardHeader className="space-y-2 p-0 pb-6">
-              <CardTitle className="text-2xl font-semibold tracking-tight text-[var(--text-primary)]">
+              <CardTitle className="text-3xl font-semibold tracking-tight text-[var(--text-primary)]">
                 Add Subject
               </CardTitle>
               <CardDescription className="text-base text-[var(--text-secondary)]">
@@ -99,7 +73,7 @@ export default async function DashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <Card className="rounded-xl border-[var(--border-card)] bg-[var(--bg-surface)] p-6 shadow-[var(--shadow-card)] transition-all duration-200 ease-out">
             <CardHeader className="space-y-2 p-0 pb-6">
-              <CardTitle className="text-2xl font-semibold tracking-tight text-[var(--text-primary)]">
+              <CardTitle className="text-3xl font-semibold tracking-tight text-[var(--text-primary)]">
                 Add Subject
               </CardTitle>
               <CardDescription className="text-base text-[var(--text-secondary)]">
@@ -112,7 +86,7 @@ export default async function DashboardPage() {
           </Card>
 
           <div className="rounded-xl border border-[var(--border-card)] bg-[var(--bg-surface)] p-6 shadow-[var(--shadow-card)]">
-            <h2 className="text-lg font-semibold tracking-tight text-[var(--text-primary)] mb-4">
+            <h2 className="text-xl font-semibold tracking-tight text-[var(--text-primary)] mb-4">
               Recent subjects
             </h2>
             <ul className="space-y-3">

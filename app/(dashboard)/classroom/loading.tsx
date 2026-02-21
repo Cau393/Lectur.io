@@ -2,7 +2,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 export default function ClassroomLoading() {
   return (
-    <div className="max-w-6xl mx-auto px-8 py-12">
+    <div className="max-w-7xl mx-auto px-8 py-12">
       <Skeleton className="h-8 w-48 mb-8 rounded-md bg-[var(--bg-overlay)]" />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {[1, 2, 3].map((i) => (

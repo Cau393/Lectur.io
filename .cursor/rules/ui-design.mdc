@@ -192,7 +192,7 @@ Tailwind reference: `p-2 p-3 p-4 p-6 p-8 p-12 p-16 p-24`
 
 ### Page Container
 ```tsx
-<main className="max-w-6xl mx-auto px-8 py-12">
+<main className="max-w-7xl mx-auto px-8 py-12">
 ```
 
 ### Classroom Hub Grid

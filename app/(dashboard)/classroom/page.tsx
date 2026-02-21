@@ -9,7 +9,7 @@ export default async function ClassroomPage() {
   const subjects = await getSubjects();
 
   return (
-    <div className="max-w-6xl mx-auto px-8 py-12">
+    <div className="max-w-7xl mx-auto px-8 py-12">
       <h1 className="text-2xl font-semibold tracking-tight text-[var(--text-primary)] mb-8">
         Classroom Hub
       </h1>

@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 export default function SubjectNotFound() {
   return (
-    <div className="max-w-6xl mx-auto px-8 py-12">
+    <div className="max-w-7xl mx-auto px-8 py-12">
       <div className="rounded-xl border border-[var(--border-card)] bg-[var(--bg-surface)] p-8 text-center shadow-[var(--shadow-card)]">
         <h1 className="text-xl font-semibold tracking-tight text-[var(--text-primary)] mb-2">
           Subject not found
