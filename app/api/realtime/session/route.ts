@@ -8,7 +8,7 @@ const REALTIME_URL = 'https://api.openai.com/v1/realtime/calls';
  */
 const sessionConfig = JSON.stringify({
   type: 'realtime',
-  model: 'gpt-4o-realtime-preview',
+  model: 'gpt-realtime',
   audio: { output: { voice: 'alloy' } },
 });
 
