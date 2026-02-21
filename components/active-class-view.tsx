@@ -87,10 +87,16 @@ export function ActiveClassView({ cls }: ActiveClassViewProps) {
   const {
     status,
     errorMessage,
+    transcript,
     startSession,
     disconnect,
     sendPrompt,
   } = useRealtimeSession({ initialPrompt });
+
+  const transcriptEndRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    transcriptEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [transcript]);
 
   // When we first connect, sync so we don't re-send the same slide (initialPrompt already sent it).
   useEffect(() => {
@@ -176,6 +182,24 @@ export function ActiveClassView({ cls }: ActiveClassViewProps) {
                   Next →
                 </button>
               </div>
+
+              {status === 'connected' && (
+                <div className="w-full mt-10 rounded-xl border border-[var(--bg-border)] bg-[var(--bg-surface)] overflow-hidden">
+                  <div className="px-4 py-3 border-b border-[var(--bg-border)]">
+                    <h3 className="text-sm font-medium text-[var(--text-muted)]">
+                      Live transcript
+                    </h3>
+                  </div>
+                  <div className="max-h-48 overflow-y-auto px-4 py-3 text-sm text-[var(--text-secondary)] whitespace-pre-wrap">
+                    {transcript || (
+                      <span className="text-[var(--text-muted)] italic">
+                        AI speech will appear here as they teach…
+                      </span>
+                    )}
+                    <div ref={transcriptEndRef} />
+                  </div>
+                </div>
+              )}
             </>
           ) : (
             <ul className="space-y-3 text-[var(--text-secondary)] text-lg w-full">
@@ -188,6 +212,24 @@ export function ActiveClassView({ cls }: ActiveClassViewProps) {
                 </li>
               ))}
             </ul>
+          )}
+
+          {status === 'connected' && !hasSlides && (
+            <div className="w-full mt-10 rounded-xl border border-[var(--bg-border)] bg-[var(--bg-surface)] overflow-hidden">
+              <div className="px-4 py-3 border-b border-[var(--bg-border)]">
+                <h3 className="text-sm font-medium text-[var(--text-muted)]">
+                  Live transcript
+                </h3>
+              </div>
+              <div className="max-h-48 overflow-y-auto px-4 py-3 text-sm text-[var(--text-secondary)] whitespace-pre-wrap">
+                {transcript || (
+                  <span className="text-[var(--text-muted)] italic">
+                    AI speech will appear here as they teach…
+                  </span>
+                )}
+                <div ref={transcriptEndRef} />
+              </div>
+            </div>
           )}
 
           {status === 'connecting' && (

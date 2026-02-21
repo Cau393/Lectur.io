@@ -13,6 +13,7 @@ export function useRealtimeSession(options: UseRealtimeSessionOptions = {}) {
   const { initialPrompt } = options;
   const [status, setStatus] = useState<RealtimeStatus>('idle');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [transcript, setTranscript] = useState('');
   const pcRef = useRef<RTCPeerConnection | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const dataChannelRef = useRef<RTCDataChannel | null>(null);
@@ -30,6 +31,7 @@ export function useRealtimeSession(options: UseRealtimeSessionOptions = {}) {
     }
     setStatus('idle');
     setErrorMessage(null);
+    setTranscript('');
   }, []);
 
   const startSession = useCallback(async () => {
@@ -74,6 +76,20 @@ export function useRealtimeSession(options: UseRealtimeSessionOptions = {}) {
           const event = JSON.parse(e.data);
           if (event.type === 'error') {
             console.error('[realtime] server event', event);
+          }
+          // Live transcript: accumulate AI speech from audio transcript deltas
+          if (event.type === 'response.output_audio_transcript.delta') {
+            const text =
+              typeof event.delta === 'string'
+                ? event.delta
+                : typeof (event as { transcript?: string }).transcript === 'string'
+                  ? (event as { transcript: string }).transcript
+                  : '';
+            if (text) setTranscript((prev) => prev + text);
+          }
+          // Optional: add newline when a response finishes for readability
+          if (event.type === 'response.done') {
+            setTranscript((prev) => (prev ? `${prev}\n\n` : prev));
           }
         } catch {
           // ignore non-JSON
@@ -128,6 +144,7 @@ export function useRealtimeSession(options: UseRealtimeSessionOptions = {}) {
   return {
     status,
     errorMessage,
+    transcript,
     startSession,
     disconnect,
     sendPrompt,
