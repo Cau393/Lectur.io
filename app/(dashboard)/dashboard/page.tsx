@@ -57,6 +57,7 @@ export default function DashboardPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ subjectName: values.subjectName.trim() }),
+        credentials: 'include',
       });
 
       const data = (await res.json()) as { subjectId?: string; error?: string };

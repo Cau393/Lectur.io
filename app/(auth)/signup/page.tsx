@@ -69,6 +69,9 @@ export default function SignupPage() {
         return;
       }
 
+      // Fallback: ensure profile exists (in case trigger didn't run)
+      await fetch('/api/ensure-profile', { method: 'POST', credentials: 'include' });
+
       router.push('/dashboard');
       router.refresh();
     } catch (err) {

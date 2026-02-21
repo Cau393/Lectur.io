@@ -25,6 +25,7 @@ export function GenerateHomeworkButton({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ classId }),
+        credentials: 'include',
       });
       const data = (await res.json()) as { error?: string };
 
