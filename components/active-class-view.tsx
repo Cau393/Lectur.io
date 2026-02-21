@@ -193,7 +193,7 @@ export function ActiveClassView({ cls }: ActiveClassViewProps) {
         </div>
       </main>
       <footer className="shrink-0 border-t border-[var(--bg-border)] bg-[var(--bg-surface)]/80 backdrop-blur-sm px-6 py-4">
-        <div className="max-w-6xl mx-auto flex items-center justify-center gap-4 flex-wrap">
+        <div className="max-w-7xl mx-auto flex items-center justify-center gap-4 flex-wrap">
           <span className="text-sm text-[var(--text-muted)]">
             {status === 'idle' && 'Click Play to start the voice class'}
             {status === 'connecting' && 'Connecting…'}

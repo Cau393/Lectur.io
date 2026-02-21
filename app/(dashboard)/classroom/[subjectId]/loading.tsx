@@ -1,12 +1,12 @@
 export default function SubjectDetailLoading() {
   return (
-    <div className="max-w-6xl mx-auto px-8 py-12">
+    <div className="max-w-7xl mx-auto px-8 py-12">
       <div className="h-8 w-64 rounded-md bg-[var(--bg-overlay)] animate-pulse mb-8" />
       <div className="relative border-l-2 border-[var(--bg-border)] ml-4 pl-8 space-y-8">
         {[1, 2, 3].map((i) => (
           <div
             key={i}
-            className="rounded-xl border border-[var(--border-card)] bg-[var(--bg-surface)] p-6 animate-pulse"
+            className="rounded-xl border border-[var(--border-card)] bg-[var(--bg-surface)] p-6 shadow-[var(--shadow-card)] animate-pulse"
           >
             <div className="h-4 bg-[var(--bg-overlay)] rounded w-20 mb-3" />
             <div className="h-6 bg-[var(--bg-overlay)] rounded w-3/4 mb-4" />
