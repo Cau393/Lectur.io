@@ -8,3 +8,7 @@ export {
   type Subject,
   type Class,
 } from './subjects';
+export {
+  getCurrentUserProfile,
+  type Profile,
+} from './profiles';
