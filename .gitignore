@@ -7,5 +7,5 @@
 .env.development
 .env.test
 .env.production
-.plan-ja.md
-.FEATURES-ja.md
+plan-ja.md
+FEATURES-ja.md
