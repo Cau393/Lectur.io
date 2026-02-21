@@ -58,6 +58,21 @@
 
 **Requirements:** User must be authenticated (cookies/session). The route uses `createClient()` from `lib/supabase/server`, which reads the session from cookies.
 
+## Tests
+
+Run the syllabus API tests:
+
+```bash
+npm run test        # watch mode
+npm run test:run    # single run
+```
+
+Tests live in `tests/syllabus/syllabus.api.test.ts` and cover:
+- 401 when unauthenticated
+- 400 when subjectName is missing or invalid
+- 500 when AI fails to generate syllabus
+- 200 with subjectId on success
+
 ## Files Created
 
 | Path | Purpose |
@@ -69,3 +84,5 @@
 | `lib/supabase/subjects.ts` | Subject/class fetch helpers |
 | `lib/supabase/index.ts` | Re-exports |
 | `app/api/syllabus/route.ts` | Syllabus generation API |
+| `tests/syllabus/syllabus.api.test.ts` | Syllabus API unit tests |
+| `vitest.config.ts` | Vitest configuration |
