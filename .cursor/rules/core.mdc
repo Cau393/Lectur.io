@@ -1,0 +1,45 @@
+---
+description: Core project context for Lectur.io. Always applied.
+alwaysApply: true
+---
+
+# Lectur.io — Core
+
+AI-powered learning platform. Users enter a subject → AI generates a syllabus of 80-min classes → students learn via slides + live WebRTC voice.
+
+## Tech Stack
+- Next.js 15 (App Router) + TypeScript (strict) + Tailwind CSS + shadcn/ui
+- Supabase (PostgreSQL + Auth + RLS)
+- Vercel AI SDK (`ai`, `@ai-sdk/openai`) — never call OpenAI REST directly
+- OpenAI Realtime API over WebRTC
+
+## Project Structure
+```
+app/
+├── (auth)/login|signup
+├── (dashboard)/layout.tsx          # Sidebar: Dashboard, Classroom Hub, Social Hub
+├── (dashboard)/dashboard/          # Add Subject form
+├── classroom/                      # Subject grid
+├── classroom/[subjectId]/          # Class roadmap + homework
+├── classroom/[subjectId]/[classId] # Active Class (slides + WebRTC voice)
+├── api/syllabus/route.ts
+└── api/homework/route.ts
+lib/supabase/                       # Supabase clients + fetch helpers
+```
+
+## DB Schema (Quick Reference)
+- **profiles**: id, email, full_name
+- **subjects**: id, user_id, name, slug
+- **classes**: id, subject_id, order_index, title, topics (jsonb), homework_markdown, duration_minutes=80
+
+## Non-Negotiable Rules
+- No `any` type
+- Functional components only — no class components
+- Named exports everywhere except Next.js pages/layouts
+- Always handle loading + error states in UI
+- RLS is enabled — never bypass it
+
+## MVP Constraints
+- No resume/progress tracking — Active Class always starts from beginning
+- Social Hub = mock UI + dummy data only
+- Auth = email/password only

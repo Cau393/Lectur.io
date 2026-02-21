@@ -1,0 +1,87 @@
+---
+description: Apply when creating or modifying API routes under app/api/, or when designing request/response contracts.
+alwaysApply: false
+---
+
+# API Route Patterns
+
+## Standard Route Structure
+Every API route must follow this pattern — no exceptions:
+
+```typescript
+import { NextResponse } from "next/server"
+import { z } from "zod"
+
+// 1. Define schema at the top
+const RequestSchema = z.object({
+  subjectName: z.string().min(1),
+})
+
+export async function POST(req: Request) {
+  // 2. Parse + validate body
+  const body = await req.json()
+  const parsed = RequestSchema.safeParse(body)
+  if (!parsed.success) {
+    return NextResponse.json(
+      { error: "Invalid request", details: parsed.error.flatten() },
+      { status: 400 }
+    )
+  }
+
+  // 3. Auth check
+  const supabase = createServerClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+
+  // 4. Business logic
+  try {
+    // ... AI generation, DB writes, etc.
+    return NextResponse.json({ result })
+  } catch (err) {
+    console.error(err)
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+  }
+}
+```
+
+## Endpoint Contracts
+
+### POST /api/syllabus
+```typescript
+// Request
+{ subjectName: string }
+
+// Response
+{ subjectId: string }
+
+// Flow
+// 1. Generate syllabus via Vercel AI SDK (structured output)
+// 2. Insert into subjects + classes tables
+// 3. Return subjectId
+```
+
+### POST /api/homework
+```typescript
+// Request
+{ classId: string }
+
+// Response
+{ homework_markdown: string }
+
+// Flow
+// 1. Fetch class title + topics from Supabase
+// 2. Generate homework markdown via Vercel AI SDK
+// 3. Update classes.homework_markdown
+// 4. Return updated markdown
+```
+
+## Rules
+- **Always validate with Zod** before touching any data
+- **Always check auth** — return 401 if no session
+- **Never expose internal errors** to the client — log server-side, return generic message
+- Use `NextResponse.json()` consistently — not `new Response()`
+- Keep routes thin: orchestrate, don't implement business logic inline
+
+## Response Style
+- Success: `{ data }` or named key (e.g., `{ subjectId }`)
+- Error: `{ error: string }` with appropriate HTTP status

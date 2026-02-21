@@ -1,0 +1,70 @@
+---
+description: Apply when writing Supabase queries, creating DB helper functions, handling auth sessions, or dealing with RLS policies.
+alwaysApply: false
+---
+
+# Supabase Rules
+
+## Client Usage — Which Client to Use
+
+| Context | Client | Import |
+|---------|--------|--------|
+| Server Component / API Route | `createServerClient()` | `lib/supabase/server.ts` |
+| Client Component | `createBrowserClient()` | `lib/supabase/client.ts` |
+
+**Never use `service_role` key on the client side — ever.**
+
+## Helper Pattern (lib/supabase/)
+All DB queries go in `lib/supabase/` — never inline Supabase calls in components or API routes.
+
+```typescript
+// lib/supabase/subjects.ts
+export async function getSubjectWithClasses(subjectId: string, userId: string) {
+  const supabase = createServerClient()
+  const { data, error } = await supabase
+    .from("subjects")
+    .select("*, classes(*)")
+    .eq("id", subjectId)
+    .eq("user_id", userId)  // belt-and-suspenders on top of RLS
+    .order("order_index", { foreignTable: "classes" })
+    .single()
+
+  if (error) throw error
+  return data
+}
+```
+
+## RLS Reminder
+RLS policies ensure users only see their own data. But still:
+- Always `.eq("user_id", userId)` as an explicit filter — defense in depth
+- When writing new queries, ask: "would this return another user's data if RLS were off?"
+
+## Auth Pattern in Server Components
+```typescript
+import { createServerClient } from "@/lib/supabase/server"
+import { redirect } from "next/navigation"
+
+const supabase = createServerClient()
+const { data: { user } } = await supabase.auth.getUser()
+if (!user) redirect("/login")
+```
+
+## Error Handling
+```typescript
+const { data, error } = await supabase.from("subjects").select("*")
+if (error) throw new Error(`Failed to fetch subjects: ${error.message}`)
+// Never silently ignore errors
+```
+
+## Schema Reference
+```sql
+profiles    (id uuid PK, email text, full_name text, created_at)
+subjects    (id uuid PK, user_id FK, name text, slug text, created_at)
+classes     (id uuid PK, subject_id FK, order_index int, title text,
+             topics jsonb, homework_markdown text, duration_minutes int=80, created_at)
+```
+
+## What to Avoid
+- Supabase calls directly in `page.tsx` or component files
+- Forgetting to handle `error` from Supabase responses
+- Using `.single()` without handling the case where no row is found (use `notFound()`)

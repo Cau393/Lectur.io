@@ -1,0 +1,90 @@
+---
+description: Apply when writing AI generation logic, prompt engineering, or working with Vercel AI SDK and OpenAI Realtime API.
+alwaysApply: false
+---
+
+# AI / Vercel AI SDK Rules
+
+## Core Rule
+**Always use Vercel AI SDK — never call OpenAI REST API directly.**
+
+```typescript
+// ✅ Correct
+import { generateText } from "ai"
+import { openai } from "@ai-sdk/openai"
+
+// ❌ Never do this
+import OpenAI from "openai"
+const client = new OpenAI()
+```
+
+## Syllabus Generation (Structured Output)
+
+Use `generateObject` with Zod schema for structured JSON.
+
+```typescript
+import { generateObject } from "ai"
+import { openai } from "@ai-sdk/openai"
+import { z } from "zod"
+
+const SyllabusSchema = z.object({
+  classes: z.array(z.object({
+    order_index: z.number(),
+    title: z.string(),
+    topics: z.array(z.string()).min(5).max(8),
+    duration_minutes: z.literal(80),
+  }))
+})
+
+const { object } = await generateObject({
+  model: openai("gpt-4o"),
+  schema: SyllabusSchema,
+  prompt: `Break down "${subjectName}" into an 80-min-per-class syllabus.
+Each class must have 5-8 topics, ordered from foundational to advanced.`,
+})
+```
+
+## Homework Generation (Markdown Output)
+
+Use `generateText` for free-form markdown.
+
+```typescript
+import { generateText } from "ai"
+import { openai } from "@ai-sdk/openai"
+
+const { text } = await generateText({
+  model: openai("gpt-4o"),
+  prompt: `
+Context: You are an expert educational designer building a curriculum for a highly motivated student.
+The student has just completed a 1-hour 20-minute class on "${classTitle}".
+Topics covered: ${topics.join(", ")}.
+
+Task: Design a challenging homework assignment that requires critical thinking,
+problem-solving, and synthesis of the material — not memorization.
+
+Constraints:
+- ~45 minutes to complete
+- Include a real-world scenario or case study
+- No multiple-choice or definition questions
+- Output in strict Markdown format
+
+Ethics: Engaging, inclusive, and free of bias.
+  `.trim(),
+})
+```
+
+## Model Selection
+- Default: `openai("gpt-4o")` for all generation
+- Do not hardcode model strings elsewhere — reference from a single config if needed
+
+## WebRTC / OpenAI Realtime API
+- Used exclusively on the Active Class page (`/classroom/[subjectId]/[classId]`)
+- Implement as a Client Component with `"use client"`
+- WebRTC setup lives in `lib/realtime/` — not inlined in the page component
+- MVP: voice playback only — no recording, no speed control
+
+## What to Avoid
+- Calling OpenAI SDK directly (use Vercel AI SDK wrappers)
+- Putting raw prompt strings in components — keep them in API routes or `lib/ai/`
+- Forgetting to handle generation errors (network failures, content policy blocks)
+- Using `streamText` when the full response is needed before DB write (use `generateText`)

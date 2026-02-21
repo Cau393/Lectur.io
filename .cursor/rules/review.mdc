@@ -1,0 +1,48 @@
+---
+description: Apply when asked to review, audit, or refactor existing code.
+alwaysApply: false
+---
+
+# Code Review Checklist
+
+When asked to "review" code, check in this order and output findings as:
+`[CRITICAL]` / `[WARN]` / `[INFO]`
+
+## 1. Architecture
+- [ ] Is Supabase called directly in a component instead of `lib/supabase/`? → `[CRITICAL]`
+- [ ] Is a Client Component used where a Server Component would work? → `[WARN]`
+- [ ] Is business logic inside a UI component? → `[WARN]`
+
+## 2. Security
+- [ ] Is `service_role` key exposed client-side? → `[CRITICAL]`
+- [ ] Is auth checked in API routes? → `[CRITICAL]`
+- [ ] Is user input validated with Zod before use? → `[CRITICAL]`
+- [ ] Could this query return another user's data if RLS were disabled? → `[WARN]`
+
+## 3. Type Safety
+- [ ] Any `any` types? → `[WARN]`
+- [ ] Any unsafe type casts (`as SomeType`) without validation? → `[WARN]`
+- [ ] Supabase response errors silently ignored? → `[WARN]`
+
+## 4. Performance
+- [ ] N+1 query? (fetching in a loop instead of a join) → `[WARN]`
+- [ ] Missing `Suspense` boundary around async Server Components? → `[INFO]`
+- [ ] Unnecessary `"use client"` causing large client bundle? → `[INFO]`
+
+## 5. AI / SDK Usage
+- [ ] Direct OpenAI REST call instead of Vercel AI SDK? → `[CRITICAL]`
+- [ ] Prompt string inlined in a component instead of API route? → `[WARN]`
+- [ ] Generation error not handled? → `[WARN]`
+
+## 6. MVP Scope
+- [ ] Is resume/progress tracking logic being added? → `[INFO]` (out of scope)
+- [ ] Is Social Hub being implemented beyond mock UI? → `[INFO]` (out of scope)
+
+## Output Format
+```
+[CRITICAL] app/classroom/[subjectId]/page.tsx line 12 — Supabase called directly in component
+[WARN]     app/api/syllabus/route.ts line 8 — No Zod validation on request body
+[INFO]     app/classroom/page.tsx — Consider adding Suspense boundary for subject grid
+```
+
+Always end the review with a one-line summary of the biggest risk to fix first.

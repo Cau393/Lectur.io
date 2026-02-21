@@ -1,0 +1,61 @@
+---
+description: Apply when designing new features, creating components, or making structural decisions about where logic should live.
+alwaysApply: false
+---
+
+# Architecture Rules
+
+## Before Writing Any New Feature
+State the following as a short comment block before the code:
+1. **Layer**: UI / API / DB
+2. **Component type**: Server or Client — and why
+3. **Auth/RLS implications**: Does this touch user-owned data?
+
+Example:
+```typescript
+// Layer: UI
+// Type: Server Component — data fetching only, no interactivity
+// RLS: fetches subjects filtered by user_id via RLS automatically
+```
+
+## Server vs Client Component Decision Tree
+```
+Does it need onClick / onChange / event handlers? → Client
+Does it need useState / useEffect / browser APIs?  → Client
+Does it only fetch data and render?                → Server ✅
+Does it use Supabase to read data?                 → Server ✅
+```
+Default to Server. Add `"use client"` only when the above forces it.
+
+## Layer Responsibilities
+
+| Layer | Responsibility | Where |
+|-------|---------------|-------|
+| UI | Render, handle user interaction | `app/` components |
+| API | Validate input, orchestrate AI/DB calls | `app/api/` routes |
+| DB | Data access, RLS enforcement | `lib/supabase/` helpers |
+
+**Never** put Supabase queries directly in components — always go through `lib/supabase/` helpers.
+
+## Component Composition Pattern
+```
+Page (Server Component)
+  └── fetches data via lib/supabase/
+  └── passes data as props to:
+        └── FeatureContainer (Client Component, if needed)
+              └── PureUI components
+```
+
+## Before Modifying Existing Code
+Always identify:
+- What other files import this module
+- Whether the DB schema is affected
+- Whether RLS policies need updating
+
+State this BEFORE making changes.
+
+## What to Avoid
+- Fetching Supabase data inside Client Components
+- Putting business logic in UI components
+- Creating new UI primitives when shadcn/ui already has them
+- Nesting `"use client"` components unnecessarily deep in the tree
