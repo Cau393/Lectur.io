@@ -142,6 +142,8 @@ describe('POST /api/syllabus', () => {
 
     expect(res.status).toBe(200);
     const data = await res.json();
+    // 200 response output: { subjectId: string }
+    console.log('200 response output:', JSON.stringify(data, null, 2));
     expect(data.subjectId).toBe('subject-uuid-123');
     expect(generateText).toHaveBeenCalledWith(
       expect.objectContaining({

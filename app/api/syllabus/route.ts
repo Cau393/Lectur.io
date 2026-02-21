@@ -51,6 +51,7 @@ export async function POST(request: Request) {
 Each class must be designed for exactly 80 minutes (1 hour 20 minutes) of instruction.
 - Cover the subject comprehensively in logical progression
 - Each class must have 5-8 discrete topics
+- By the end of the subject, the student should have a solid understanding of the subject and be able to apply the knowledge to real-world problems.
 - Order classes from foundational to advanced
 - Output valid JSON matching the schema`,
     });

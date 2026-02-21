@@ -58,6 +58,21 @@
 
 **Requirements:** User must be authenticated (cookies/session). The route uses `createClient()` from `lib/supabase/server`, which reads the session from cookies.
 
+## Test real syllabus (inserts into DB)
+
+To generate a real syllabus via OpenAI and insert it into Supabase:
+
+```bash
+npm run syllabus:test "Python Basics"
+# Or any topic: npm run syllabus:test "Quantum Physics"
+```
+
+Requires in `.env.local`:
+- `OPENAI_API_KEY`
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `SUPABASE_SERVICE_ROLE_KEY` (Supabase Dashboard > Project Settings > API)
+- `TEST_USER_ID` (a user UUID from Auth > Users; create one via signup first)
+
 ## Tests
 
 Run the syllabus API tests:
