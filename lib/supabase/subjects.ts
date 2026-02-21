@@ -8,12 +8,21 @@ export type Subject = {
   created_at: string;
 };
 
+export type Slide = {
+  slide_index: number;
+  title: string;
+  type: 'title' | 'content' | 'example';
+  bullet_points: string[];
+  real_world_example?: string;
+};
+
 export type Class = {
   id: string;
   subject_id: string;
   order_index: number;
   title: string;
   topics: string[];
+  slides: Slide[] | null;
   homework_markdown: string | null;
   duration_minutes: number;
   created_at: string;
@@ -90,5 +99,6 @@ export async function getClassesBySubjectId(
   return (data ?? []).map((c) => ({
     ...c,
     topics: (c.topics as string[]) ?? [],
+    slides: (c.slides as Slide[] | null) ?? null,
   }));
 }
