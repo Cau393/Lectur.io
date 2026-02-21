@@ -9,3 +9,4 @@
 .env.production
 plan-ja.md
 FEATURES-ja.md
+node_modules
