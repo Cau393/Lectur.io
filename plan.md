@@ -1,6 +1,6 @@
-Aura Learning Platform - 4-Hour MVP Blueprint
+Lectur.io - 4-Hour MVP Blueprint
 
-This document serves as the architectural blueprint for Aura. Save as plan.md in your project root.
+This document serves as the architectural blueprint for Lectur.io. Save as plan.md in your project root.
 
 
 ## 0. MVP Features (Scope for 4 Hours)

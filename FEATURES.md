@@ -1,6 +1,6 @@
-# Aura Learning Platform - Feature Documentation
+# Lectur.io - Feature Documentation
 
-This document provides detailed explanations of each feature in the Aura Learning Platform, describing what users can do with each feature.
+This document provides detailed explanations of each feature in Lectur.io, describing what users can do with each feature.
 
 ## Table of Contents
 
@@ -437,7 +437,7 @@ The following features may be added in the future:
 
 ## Summary
 
-Aura Learning Platform is an AI-powered learning platform. The main features are as follows:
+Lectur.io is an AI-powered learning platform. The main features are as follows:
 
 1. **Subject Creation**: Simply enter a subject name, and AI automatically generates a syllabus
 2. **Structured Learning**: Systematic learning plan with 80-minute classes
