@@ -6,22 +6,22 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-background via-background to-muted/20 px-4 py-12">
+    <div className="flex min-h-screen w-full flex-col items-center justify-center bg-[#09090b] px-4 py-12">
       <div className="w-full max-w-md space-y-8">
         <div className="text-center">
-          <Link href="/" className="inline-block">
-            <h1 className="text-3xl font-bold tracking-tight text-foreground">
+          <Link
+            href="/"
+            className="inline-block no-underline text-[#fafafa] transition-opacity duration-200 hover:opacity-90"
+          >
+            <h1 className="text-3xl font-semibold tracking-tight text-[#fafafa]">
               Lectur.io
             </h1>
-            <p className="mt-2 text-sm text-muted-foreground">
+            <p className="mt-2 text-sm text-[#52525b]">
               AI-powered learning platform
             </p>
           </Link>
         </div>
-        <div className="relative">
-          <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br from-primary/5 via-transparent to-primary/5 blur-3xl" />
-          {children}
-        </div>
+        <div className="relative">{children}</div>
       </div>
     </div>
   );

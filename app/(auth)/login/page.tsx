@@ -71,22 +71,29 @@ export default function LoginPage() {
   };
 
   return (
-    <Card className="border-2 shadow-xl">
-      <CardHeader className="space-y-3 pb-6">
-        <CardTitle className="text-2xl font-semibold tracking-tight">
+    <Card className="rounded-xl border border-[#27272a] bg-[#111113] p-6 shadow-none transition-all duration-200 ease-out">
+      <CardHeader className="space-y-2 p-0 pb-6">
+        <CardTitle className="text-2xl font-semibold tracking-tight text-[#fafafa]">
           Welcome back
         </CardTitle>
-        <CardDescription className="text-base">
+        <CardDescription className="text-base text-[#a1a1aa]">
           Sign in to your account to continue learning
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-6 p-0">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
             {error && (
-              <Alert variant="destructive" className="border-2">
-                <AlertTitle className="font-semibold">Error</AlertTitle>
-                <AlertDescription className="text-sm">{error}</AlertDescription>
+              <Alert
+                variant="destructive"
+                className="rounded-lg border border-[#ef4444]/50 bg-[#ef4444]/10 text-[#ef4444] [&>svg]:text-[#ef4444]"
+              >
+                <AlertTitle className="font-medium text-[#ef4444]">
+                  Error
+                </AlertTitle>
+                <AlertDescription className="text-sm text-[#ef4444]/90">
+                  {error}
+                </AlertDescription>
               </Alert>
             )}
 
@@ -95,18 +102,18 @@ export default function LoginPage() {
               name="email"
               render={({ field }) => (
                 <FormItem className="space-y-2">
-                  <FormLabel className="text-sm font-medium">
+                  <FormLabel className="text-sm font-medium text-[#fafafa]">
                     Email address
                   </FormLabel>
                   <FormControl>
                     <Input
                       type="email"
                       placeholder="name@example.com"
-                      className="h-11"
+                      className="h-11 rounded-lg border border-[#27272a] bg-[#111113] px-4 py-2.5 text-sm text-[#fafafa] placeholder:text-[#52525b] focus-visible:border-[#6366f1] focus-visible:ring-[#6366f1]/30"
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-[#ef4444] text-sm" />
                 </FormItem>
               )}
             />
@@ -116,16 +123,18 @@ export default function LoginPage() {
               name="password"
               render={({ field }) => (
                 <FormItem className="space-y-2">
-                  <FormLabel className="text-sm font-medium">Password</FormLabel>
+                  <FormLabel className="text-sm font-medium text-[#fafafa]">
+                    Password
+                  </FormLabel>
                   <FormControl>
                     <Input
                       type="password"
                       placeholder="Enter your password"
-                      className="h-11"
+                      className="h-11 rounded-lg border border-[#27272a] bg-[#111113] px-4 py-2.5 text-sm text-[#fafafa] placeholder:text-[#52525b] focus-visible:border-[#6366f1] focus-visible:ring-[#6366f1]/30"
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-[#ef4444] text-sm" />
                 </FormItem>
               )}
             />
@@ -133,10 +142,17 @@ export default function LoginPage() {
             <div className="pt-2">
               <Button
                 type="submit"
-                className="w-full h-11 text-base font-medium"
                 disabled={isLoading}
+                className="h-11 w-full rounded-lg bg-[#6366f1] px-5 py-2.5 text-sm font-medium text-white transition-colors duration-150 hover:bg-[#4f46e5] disabled:opacity-70"
               >
-                {isLoading ? 'Signing in...' : 'Sign In'}
+                {isLoading ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
+                    Signing in...
+                  </span>
+                ) : (
+                  'Sign In'
+                )}
               </Button>
             </div>
           </form>
@@ -144,10 +160,10 @@ export default function LoginPage() {
 
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t" />
+            <span className="w-full border-t border-[#27272a]" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-card px-2 text-muted-foreground">
+            <span className="bg-[#111113] px-2 text-[#52525b]">
               New to Lectur.io?
             </span>
           </div>
@@ -156,7 +172,7 @@ export default function LoginPage() {
         <div className="text-center">
           <a
             href="/signup"
-            className="inline-flex h-11 items-center justify-center rounded-md border-2 border-input bg-background px-6 text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+            className="inline-flex h-11 items-center justify-center rounded-lg border border-[#27272a] bg-transparent px-6 text-sm font-medium no-underline text-[#a1a1aa] transition-all duration-150 hover:bg-[#1a1a1f] hover:text-[#fafafa] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366f1]/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[#09090b]"
           >
             Create an account
           </a>

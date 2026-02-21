@@ -4,6 +4,21 @@
 
 @layer base {
   :root {
+    /* Premium EdTech — dark-first (ui-design.mdc) */
+    --bg-base: #09090b;
+    --bg-surface: #111113;
+    --bg-overlay: #1a1a1f;
+    --bg-border: #27272a;
+    --text-primary: #fafafa;
+    --text-secondary: #a1a1aa;
+    --text-muted: #52525b;
+    --accent: #6366f1;
+    --accent-hover: #4f46e5;
+    --accent-subtle: rgba(99, 102, 241, 0.12);
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --error: #ef4444;
+
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
@@ -65,5 +80,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    background-color: var(--bg-base);
+    color: var(--text-primary);
   }
 }
