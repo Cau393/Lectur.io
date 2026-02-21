@@ -97,7 +97,7 @@ export function AddSubjectForm() {
               <FormControl>
                 <Input
                   placeholder="e.g. Introduction to Economics"
-                  className="h-11 rounded-lg border-[var(--bg-border)] bg-[var(--bg-surface)] px-4 py-2.5 text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus-visible:border-[var(--accent)] focus-visible:ring-[var(--accent)]/30"
+                  className="h-11 rounded-lg border-[var(--bg-border)] bg-[var(--bg-surface)] px-4 py-2.5 text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus-visible:border-[hsl(var(--accent))] focus-visible:ring-[hsl(var(--accent)/0.3)]"
                   disabled={isLoading}
                   {...field}
                 />

@@ -46,7 +46,7 @@ function SlideCard({ slide }: { slide: Slide }) {
         <ul className="space-y-2 text-[var(--text-secondary)]">
           {slide.bullet_points.map((point) => (
             <li key={point} className="flex gap-2">
-              <span className="text-[var(--accent)] shrink-0">•</span>
+              <span className="text-[hsl(var(--accent))] shrink-0">•</span>
               <span>{point}</span>
             </li>
           ))}
@@ -133,7 +133,7 @@ export function ActiveClassView({ cls }: ActiveClassViewProps) {
                 <button
                   type="button"
                   onClick={startSession}
-                  className="inline-flex h-11 items-center justify-center rounded-lg bg-[var(--accent)] px-6 text-sm font-medium text-white transition-colors duration-150 hover:bg-[var(--accent-hover)]"
+                  className="inline-flex h-11 items-center justify-center rounded-lg bg-[hsl(var(--accent))] px-6 text-sm font-medium text-white transition-colors duration-150 hover:bg-[hsl(var(--accent-hover))]"
                 >
                   Play
                 </button>
@@ -181,7 +181,7 @@ export function ActiveClassView({ cls }: ActiveClassViewProps) {
             <ul className="space-y-3 text-[var(--text-secondary)] text-lg w-full">
               {cls.topics.map((topic, i) => (
                 <li key={i} className="flex gap-3">
-                  <span className="text-[var(--accent)] font-medium shrink-0">
+                  <span className="text-[hsl(var(--accent))] font-medium shrink-0">
                     {i + 1}.
                   </span>
                   <span>{topic}</span>

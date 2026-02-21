@@ -121,7 +121,7 @@ export function HomeworkViewModal({
                   </pre>
                 ),
                 blockquote: ({ children }) => (
-                  <blockquote className="border-l-2 border-[var(--accent)] pl-4 italic text-[var(--text-secondary)]">
+                  <blockquote className="border-l-2 border-[hsl(var(--accent))] pl-4 italic text-[var(--text-secondary)]">
                     {children}
                   </blockquote>
                 ),
@@ -130,7 +130,7 @@ export function HomeworkViewModal({
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[var(--accent)] underline hover:text-[var(--accent-hover)]"
+                    className="text-[hsl(var(--accent))] underline hover:text-[hsl(var(--accent-hover))]"
                   >
                     {children}
                   </a>

@@ -19,7 +19,7 @@ export default async function ClassroomPage() {
           <p className="text-[var(--text-secondary)] mb-4">No subjects yet</p>
           <Link
             href="/dashboard"
-            className="inline-flex h-11 items-center justify-center rounded-lg bg-[var(--accent)] px-5 py-2.5 text-sm font-medium text-white no-underline transition-colors duration-150 hover:bg-[var(--accent-hover)]"
+            className="inline-flex h-11 items-center justify-center rounded-lg bg-[hsl(var(--accent))] px-5 py-2.5 text-sm font-medium text-white no-underline transition-colors duration-150 hover:bg-[hsl(var(--accent-hover))]"
           >
             Add your first subject
           </Link>
@@ -30,7 +30,7 @@ export default async function ClassroomPage() {
             <Link
               key={subject.id}
               href={`/classroom/${subject.id}`}
-              className="rounded-xl border border-[var(--border-card)] bg-[var(--bg-surface)] p-6 shadow-[var(--shadow-card)] transition-all duration-200 ease-out hover:border-[var(--accent)]/30 hover:bg-[var(--bg-hover)] cursor-pointer no-underline"
+              className="rounded-xl border border-[var(--border-card)] bg-[var(--bg-surface)] p-6 shadow-[var(--shadow-card)] transition-all duration-200 ease-out hover:border-[hsl(var(--accent)/0.3)] hover:bg-[var(--bg-hover)] cursor-pointer no-underline"
             >
               <h2 className="text-lg font-semibold tracking-tight text-[var(--text-primary)]">
                 {subject.name}

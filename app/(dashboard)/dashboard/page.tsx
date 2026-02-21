@@ -38,7 +38,7 @@ export default async function DashboardPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-8 py-12">
-      <h1 className="text-3xl font-semibold tracking-tight text-[var(--accent)] mb-2">
+      <h1 className="text-3xl font-semibold tracking-tight text-[hsl(var(--accent))] mb-2">
         {greeting}
       </h1>
 

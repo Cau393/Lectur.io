@@ -30,7 +30,7 @@ export function DashboardSidebar() {
         const baseClass =
           'block w-full rounded-md px-3 py-2 text-left text-sm font-medium transition-all duration-150';
         const activeClass =
-          'bg-[var(--accent-subtle)] text-[var(--accent)]';
+          'bg-[var(--accent-subtle)] text-[hsl(var(--accent))]';
         const inactiveClass =
           'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-overlay)]';
 
