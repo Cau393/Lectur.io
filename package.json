@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "syllabus:test": "npx tsx scripts/test-syllabus-output.ts",
+    "homework:test": "npx tsx scripts/test-homework-output.ts"
   },
   "dependencies": {
     "@ai-sdk/openai": "^1.0.0",
