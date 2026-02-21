@@ -81,7 +81,7 @@ export default async function DashboardPage() {
           <p className="text-[var(--text-secondary)]">
             You don&apos;t have any subjects yet. Add your first subject to get a syllabus and start learning.
           </p>
-          <Card className="max-w-xl rounded-xl border-[var(--bg-border)] bg-[var(--bg-surface)] p-6 shadow-none transition-all duration-200 ease-out">
+          <Card className="max-w-xl rounded-xl border-[var(--border-card)] bg-[var(--bg-surface)] p-6 shadow-none transition-all duration-200 ease-out">
             <CardHeader className="space-y-2 p-0 pb-6">
               <CardTitle className="text-2xl font-semibold tracking-tight text-[var(--text-primary)]">
                 Add Subject
@@ -97,7 +97,7 @@ export default async function DashboardPage() {
         </div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <Card className="rounded-xl border-[var(--bg-border)] bg-[var(--bg-surface)] p-6 shadow-none transition-all duration-200 ease-out">
+          <Card className="rounded-xl border-[var(--border-card)] bg-[var(--bg-surface)] p-6 shadow-none transition-all duration-200 ease-out">
             <CardHeader className="space-y-2 p-0 pb-6">
               <CardTitle className="text-2xl font-semibold tracking-tight text-[var(--text-primary)]">
                 Add Subject
@@ -111,7 +111,7 @@ export default async function DashboardPage() {
             </CardContent>
           </Card>
 
-          <div className="rounded-xl border border-[var(--bg-border)] bg-[var(--bg-surface)] p-6">
+          <div className="rounded-xl border border-[var(--border-card)] bg-[var(--bg-surface)] p-6">
             <h2 className="text-lg font-semibold tracking-tight text-[var(--text-primary)] mb-4">
               Recent subjects
             </h2>
@@ -120,12 +120,12 @@ export default async function DashboardPage() {
                 <li key={subject.id}>
                   <Link
                     href={`/classroom/${subject.id}`}
-                    className="flex items-center justify-between rounded-lg border border-[var(--bg-border)] bg-[var(--bg-overlay)] p-4 transition-all duration-200 ease-out hover:border-[var(--accent)]/30 hover:bg-[var(--bg-surface)] no-underline"
+                    className="flex items-center justify-between rounded-lg border border-[var(--border-card)] bg-[var(--bg-surface)] p-4 transition-all duration-200 ease-out hover:border-[var(--accent)]/30 hover:bg-[var(--bg-hover)] no-underline"
                   >
                     <span className="font-medium text-[var(--text-primary)]">
                       {subject.name}
                     </span>
-                    <span className="inline-flex items-center text-[11px] font-medium uppercase tracking-widest text-[var(--text-muted)] border border-[var(--bg-border)] rounded-md px-2 py-0.5">
+                    <span className="inline-flex items-center text-[11px] font-medium uppercase tracking-widest text-[var(--text-muted)] border border-[var(--border-card)] rounded-md px-2 py-0.5">
                       {recentClassCounts[i]} classes
                     </span>
                   </Link>

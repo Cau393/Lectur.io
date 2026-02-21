@@ -4,29 +4,36 @@
 
 @layer base {
   :root {
+    /* Theme — primary blue */
+    --color-primary: #1d56c9;
+    --color-primary-hover: #1a4db5;
+    --color-primary-dark: #164299;
+
     /* Premium EdTech — light gray base (ui-design.mdc) */
-    --bg-base: #f4f4f5;
+    --bg-base: #f8f8f9;
     --bg-surface: #ffffff;
     --bg-overlay: #e4e4e7;
+    --bg-hover: #fafcff;
     --bg-border: #d4d4d8;
+    --border-card: #c5d9f8;
     --text-primary: #18181b;
     --text-secondary: #52525b;
     --text-muted: #71717a;
-    --accent: #6366f1;
-    --accent-hover: #4f46e5;
-    --accent-subtle: rgba(99, 102, 241, 0.15);
+    --accent: var(--color-primary);
+    --accent-hover: var(--color-primary-hover);
+    --accent-subtle: rgba(29, 86, 201, 0.15);
     --success: #22c55e;
     --warning: #f59e0b;
     --error: #ef4444;
 
-    /* shadcn HSL — light gray theme, primary = indigo CTA */
+    /* shadcn HSL — primary blue CTA */
     --background: 0 0% 96%;
     --foreground: 240 10% 4%;
     --card: 0 0% 100%;
     --card-foreground: 240 10% 4%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 4%;
-    --primary: 239 84% 67%;
+    --primary: 217 76% 45%;
     --primary-foreground: 0 0% 100%;
     --secondary: 240 5% 91%;
     --secondary-foreground: 240 10% 4%;
@@ -38,7 +45,7 @@
     --destructive-foreground: 0 0% 98%;
     --border: 240 6% 84%;
     --input: 240 6% 84%;
-    --ring: 239 84% 67%;
+    --ring: 217 76% 45%;
     --radius: 0.5rem;
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
