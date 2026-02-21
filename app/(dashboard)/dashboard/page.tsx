@@ -1,9 +1,9 @@
 // Layer: UI
-// Type: Server Component — page structure, data fetching
-// RLS: getSubjects / getClassesBySubjectId / getCurrentUserProfile enforce user ownership
+// Type: Server Component — fetches user + subjects; AddSubjectForm is client
+// RLS: not applicable; API route enforces auth
 
-import { redirect } from 'next/navigation';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import {
   Card,
   CardContent,
@@ -26,15 +26,13 @@ export default async function DashboardPage() {
   if (!user) redirect('/login');
 
   const subjects = await getSubjects();
-
-  const classesPerSubject: Class[][] = await Promise.all(
+  const classesPerSubject = await Promise.all(
     subjects.map((s) => getClassesBySubjectId(s.id))
   );
-
   const recentSubjects = subjects.slice(0, RECENT_SUBJECTS_LIMIT);
-  const recentClassCounts = classesPerSubject.slice(0, RECENT_SUBJECTS_LIMIT).map(
-    (classes) => classes.length
-  );
+  const recentClassCounts = classesPerSubject
+    .slice(0, RECENT_SUBJECTS_LIMIT)
+    .map((classes: Class[]) => classes.length);
 
   const greeting = 'Welcome back';
 
@@ -53,15 +51,17 @@ export default async function DashboardPage() {
       {subjects.length === 0 ? (
         <div className="space-y-8">
           <p className="text-[var(--text-secondary)]">
-            You don&apos;t have any subjects yet. Add your first subject to get a syllabus and start learning.
+            You don&apos;t have any subjects yet. Add your first subject to get
+            a syllabus and start learning.
           </p>
           <Card className="max-w-xl rounded-xl border-[var(--border-card)] bg-[var(--bg-surface)] p-6 shadow-[var(--shadow-card)] transition-all duration-200 ease-out">
             <CardHeader className="space-y-2 p-0 pb-6">
-              <CardTitle className="text-3xl font-semibold tracking-tight text-[var(--text-primary)]">
+              <CardTitle className="text-2xl font-semibold tracking-tight text-[var(--text-primary)]">
                 Add Subject
               </CardTitle>
               <CardDescription className="text-base text-[var(--text-secondary)]">
-                Enter a subject name and AI will generate an 80-minute class syllabus.
+                Enter a subject name and AI will generate an 80-minute class
+                syllabus.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6 p-0">
@@ -73,11 +73,12 @@ export default async function DashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <Card className="rounded-xl border-[var(--border-card)] bg-[var(--bg-surface)] p-6 shadow-[var(--shadow-card)] transition-all duration-200 ease-out">
             <CardHeader className="space-y-2 p-0 pb-6">
-              <CardTitle className="text-3xl font-semibold tracking-tight text-[var(--text-primary)]">
+              <CardTitle className="text-2xl font-semibold tracking-tight text-[var(--text-primary)]">
                 Add Subject
               </CardTitle>
               <CardDescription className="text-base text-[var(--text-secondary)]">
-                Enter a subject name and AI will generate an 80-minute class syllabus.
+                Enter a subject name and AI will generate an 80-minute class
+                syllabus.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6 p-0">
@@ -85,32 +86,34 @@ export default async function DashboardPage() {
             </CardContent>
           </Card>
 
-          <div className="rounded-xl border border-[var(--border-card)] bg-[var(--bg-surface)] p-6 shadow-[var(--shadow-card)]">
-            <h2 className="text-xl font-semibold tracking-tight text-[var(--text-primary)] mb-4">
+          <div className="flex flex-col rounded-xl border border-[var(--border-card)] bg-[var(--bg-surface)] p-6 shadow-[var(--shadow-card)]">
+            <h2 className="text-2xl font-semibold tracking-tight text-[var(--text-primary)] mb-4 shrink-0">
               Recent subjects
             </h2>
-            <ul className="space-y-3">
+            <ul className="min-h-0 flex-1 space-y-3">
               {recentSubjects.map((subject, i) => (
                 <li key={subject.id}>
                   <Link
                     href={`/classroom/${subject.id}`}
-                    className="flex items-center justify-between rounded-lg border border-[var(--border-card)] bg-[var(--bg-surface)] p-4 transition-all duration-200 ease-out hover:border-[var(--accent)]/30 hover:bg-[var(--bg-hover)] no-underline"
+                    className="flex items-center justify-between rounded-lg border border-[var(--border-card)] bg-[var(--bg-surface)] p-4 text-[var(--text-primary)] transition-all duration-200 ease-out hover:border-[var(--color-primary)]/30 hover:bg-[var(--bg-hover)] no-underline"
                   >
-                    <span className="font-medium text-[var(--text-primary)]">
+                    <span className="font-medium">
                       {subject.name}
                     </span>
-                    <span className="inline-flex items-center text-[11px] font-medium uppercase tracking-widest text-[var(--text-muted)] border border-[var(--border-card)] rounded-md px-2 py-0.5">
-                      {recentClassCounts[i]} classes
-                    </span>
+                    {recentClassCounts[i] !== undefined && (
+                      <span className="text-sm text-[var(--text-muted)]">
+                        {recentClassCounts[i]} classes
+                      </span>
+                    )}
                   </Link>
                 </li>
               ))}
             </ul>
             <Link
               href="/classroom"
-              className="mt-4 inline-flex items-center text-sm font-medium text-[var(--accent)] no-underline transition-colors duration-150 hover:text-[var(--accent-hover)]"
+              className="mt-4 flex h-11 w-full shrink-0 items-center justify-center rounded-lg border border-[var(--border-card)] bg-[var(--bg-surface)] text-sm font-medium text-[var(--text-primary)] no-underline transition-all duration-200 ease-out hover:border-[var(--color-primary)]/30 hover:bg-[var(--bg-hover)]"
             >
-              View all → Classroom Hub
+              Classroom Hub
             </Link>
           </div>
         </div>

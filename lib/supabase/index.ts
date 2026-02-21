@@ -7,8 +7,5 @@ export {
   getClassesBySubjectId,
   type Subject,
   type Class,
+  type Slide,
 } from './subjects';
-export {
-  getCurrentUserProfile,
-  type Profile,
-} from './profiles';

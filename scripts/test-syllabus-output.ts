@@ -39,12 +39,25 @@ const syllabusSchema = z.object({
       order_index: z.number(),
       title: z.string(),
       topics: z.array(z.string()),
-      duration_minutes: z.literal(80),
+      duration_minutes: z.literal(40),
+    })
+  ),
+});
+
+const slidesSchema = z.object({
+  slides: z.array(
+    z.object({
+      slide_index: z.number(),
+      title: z.string(),
+      type: z.enum(['title', 'content', 'example']),
+      bullet_points: z.array(z.string()),
+      real_world_example: z.string().optional(),
     })
   ),
 });
 
 type SyllabusOutput = z.infer<typeof syllabusSchema>;
+type SlidesOutput = z.infer<typeof slidesSchema>;
 
 async function main() {
   const topic = process.argv[2] || 'Python Basics';
@@ -77,9 +90,9 @@ async function main() {
     }),
     prompt: `You are an expert curriculum designer. Break down the subject "${topic}" into a structured learning syllabus.
 
-Each class must be designed for exactly 80 minutes (1 hour 20 minutes) of instruction.
+Each class must be designed for exactly 40 minutes of instruction.
 - Cover the subject comprehensively in logical progression
-- Each class must have 5-8 discrete topics
+- Each class must have 3-5 discrete topics
 - By the end of the subject, the student should have a solid understanding of the subject and be able to apply the knowledge to real-world problems.
 - Order classes from foundational to advanced
 - Output valid JSON matching the schema`,
@@ -120,21 +133,62 @@ Each class must be designed for exactly 80 minutes (1 hour 20 minutes) of instru
     order_index: c.order_index,
     title: c.title,
     topics: c.topics,
-    duration_minutes: 80,
+    duration_minutes: 40,
   }));
 
-  const { error: classesError } = await supabase.from('classes').insert(classesToInsert);
+  const { data: insertedClasses, error: classesError } = await supabase
+    .from('classes')
+    .insert(classesToInsert)
+    .select('id, order_index, title, topics');
 
-  if (classesError) {
+  if (classesError || !insertedClasses?.length) {
     await supabase.from('subjects').delete().eq('id', subject.id);
-    console.error('Failed to insert classes:', classesError.message);
+    console.error('Failed to insert classes:', classesError?.message ?? 'Unknown error');
     process.exit(1);
   }
 
   console.log('Inserted into DB:');
   console.log('  Subject id:', subject.id);
-  console.log('  Classes:', classesToInsert.length);
-  console.log('\n--- Per-class summary (80 min each) ---');
+  console.log('  Classes:', insertedClasses.length);
+  console.log('\n--- Generating slides per class (40 min each) ---');
+
+  for (const cls of insertedClasses) {
+    try {
+      const topics = (cls.topics as string[]) ?? [];
+      const { experimental_output: slidesOutput } = await generateText({
+        model: openai('gpt-4o-mini'),
+        experimental_output: Output.object({
+          schema: slidesSchema,
+        }),
+        prompt: `You are an expert educator. Generate lecture slides for an AI teacher to explain this class.
+
+Class title: ${cls.title}
+Topics: ${topics.join(', ')}
+
+Duration: 40 minutes. Create slides in lecture format:
+- Start with a title/overview slide (type "title", bullet_points can be empty)
+- One content slide per topic with 3-5 bullet points (key concepts, definitions)
+- At least one "example" slide with a real-world scenario or case study (type "example", include real_world_example)
+- Use type: "title" | "content" | "example"
+- bullet_points: array of strings
+- real_world_example: string (only for type "example")
+
+Output valid JSON matching the schema.`,
+      });
+
+      const slides = (slidesOutput as SlidesOutput | undefined)?.slides;
+      if (slides?.length) {
+        await supabase.from('classes').update({ slides }).eq('id', cls.id);
+        console.log(`  Class "${cls.title}": ${slides.length} slides generated`);
+      } else {
+        console.log(`  Class "${cls.title}": slides generation returned no slides`);
+      }
+    } catch (slidesErr) {
+      console.error(`  Class "${cls.title}": slides failed`, slidesErr);
+    }
+  }
+
+  console.log('\n--- Per-class summary ---');
   classesToInsert.forEach((c, i) => {
     console.log(`\nClass ${i + 1}: ${c.title}`);
     console.log(`  Topics (${c.topics.length}): ${c.topics.join(', ')}`);

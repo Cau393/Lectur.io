@@ -111,7 +111,7 @@ export function AddSubjectForm() {
           <Button
             type="submit"
             disabled={isLoading}
-            className="h-11 w-full rounded-lg bg-[var(--accent)] px-5 py-2.5 text-sm font-medium text-white transition-colors duration-150 hover:bg-[var(--accent-hover)] disabled:opacity-70"
+            className="h-11 w-full rounded-lg bg-[var(--color-primary)] px-5 py-2.5 text-sm font-medium text-white transition-colors duration-150 hover:bg-[var(--color-primary-hover)] disabled:opacity-70"
           >
             {isLoading ? (
               <span className="flex items-center justify-center gap-2">

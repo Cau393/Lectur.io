@@ -45,15 +45,16 @@ export async function POST(request: Request) {
 
     const { text: homeworkMarkdown } = await generateText({
       model: openai('gpt-4o-mini'),
-      prompt: `You are an expert educational designer building a curriculum for a highly motivated student. The student has just completed a 1-hour and 20-minute class on: **${title}**. ${topicList}
+      prompt: `You are an expert educational designer building a curriculum for a highly motivated student. The student has just completed a 40 minute class on: **${title}**. ${topicList}
 
-Task: Design a challenging homework assignment that requires critical thinking, problem-solving, and synthesis of the material, rather than simple memorization.
+Task: Design a homework assignment that requires critical thinking, problem-solving, and synthesis of the material, rather than simple memorization.
 
 Constraints:
-- The assignment must take roughly 45 minutes to complete.
+- The assignment must take roughly 20 minutes to complete.
 - Include a real-world scenario or case study they must analyze.
 - Do not ask simple multiple-choice or definition questions.
 - Output the assignment in strict Markdown format.
+- No need to provide any submission requirements or due dates.
 
 Ethics/Engagement: Ensure the scenario is engaging, inclusive, and free of bias.`,
     });
