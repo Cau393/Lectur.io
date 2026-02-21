@@ -8,18 +8,26 @@ type ActiveClassViewProps = {
   cls: Class;
 };
 
-function buildSlidePrompt(slide: Slide): string {
-  const parts = [`Teach this slide: "${slide.title}".`];
+function buildSlidePrompt(slide: Slide, isNewSlide = false): string {
+  const intro = isNewSlide
+    ? 'We have moved to a new slide. Start teaching this slide now. '
+    : '';
+  const parts = [
+    `${intro}Teach this slide in depth. Spend 5 to 10 minutes on this slide — do not just read the bullet points.`,
+    `Slide title: "${slide.title}".`,
+  ];
   if (slide.bullet_points.length > 0) {
     parts.push(
-      `Cover these points: ${slide.bullet_points.join(' ')}`
+      `Expand on each of these points with explanations, examples, and context: ${slide.bullet_points.join(' ')}. Elaborate so a student really understands; aim for 5-10 minutes of teaching for this slide.`
     );
   }
   if (slide.real_world_example) {
-    parts.push(`Include this real-world example: ${slide.real_world_example}`);
+    parts.push(
+      `Weave in this real-world example and discuss it: ${slide.real_world_example}.`
+    );
   }
   parts.push(
-    'Speak clearly and concisely for this slide. At the end of this slide, ask the student: "Do you have any questions before we move on?" and pause to allow them to respond.'
+    'At the end of this slide (after your 5-10 minute teaching), ask the student: "Do you have any questions before we move on?" and pause to allow them to respond.'
   );
   return parts.join(' ');
 }
@@ -69,10 +77,12 @@ export function ActiveClassView({ cls }: ActiveClassViewProps) {
   const currentSlide = hasSlides ? sortedSlides[currentIndex] : null;
   const prevIndexRef = useRef(0);
 
+  // Use the currently visible slide when Play is pressed so audio starts for that slide.
   const initialPrompt = useMemo(() => {
-    if (hasSlides) return buildSlidePrompt(sortedSlides[0]);
+    if (hasSlides && sortedSlides[currentIndex])
+      return buildSlidePrompt(sortedSlides[currentIndex], false);
     return buildClassFallbackPrompt(cls);
-  }, [hasSlides, sortedSlides, cls]);
+  }, [hasSlides, sortedSlides, currentIndex, cls]);
 
   const {
     status,
@@ -82,12 +92,17 @@ export function ActiveClassView({ cls }: ActiveClassViewProps) {
     sendPrompt,
   } = useRealtimeSession({ initialPrompt });
 
-  // When user changes slide and voice is connected, tell the AI to teach the new slide.
+  // When we first connect, sync so we don't re-send the same slide (initialPrompt already sent it).
+  useEffect(() => {
+    if (status === 'connected') prevIndexRef.current = currentIndex;
+  }, [status, currentIndex]);
+
+  // When user reaches a new slide and voice is connected, auto-start audio for that slide.
   useEffect(() => {
     if (status !== 'connected' || !hasSlides || !currentSlide) return;
     if (prevIndexRef.current === currentIndex) return;
     prevIndexRef.current = currentIndex;
-    sendPrompt(buildSlidePrompt(currentSlide));
+    sendPrompt(buildSlidePrompt(currentSlide, true));
   }, [currentIndex, status, hasSlides, currentSlide, sendPrompt]);
 
   const goPrev = () => {
