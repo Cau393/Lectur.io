@@ -13,7 +13,7 @@ export default async function DashboardLayout({
     <div className="flex min-h-screen bg-[var(--bg-base)]">
       <Sidebar />
       <div className="flex-1 flex flex-col overflow-hidden">
-        <header className="shrink-0 border-b border-[var(--bg-border)] bg-[var(--bg-surface)] px-6 py-3" />
+        <header className="shrink-0 border-b border-[var(--border-card)] bg-[var(--bg-base)] px-6 py-3" />
         <main className="flex-1 overflow-auto">{children}</main>
       </div>
     </div>

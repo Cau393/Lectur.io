@@ -8,7 +8,7 @@ export default function ClassroomLoading() {
         {[1, 2, 3].map((i) => (
           <div
             key={i}
-            className="rounded-xl border border-[var(--border-card)] bg-[var(--bg-surface)] p-6 animate-pulse"
+            className="rounded-xl border border-[var(--border-card)] bg-[var(--bg-surface)] p-6 shadow-[var(--shadow-card)] animate-pulse"
           >
             <div className="h-5 bg-[var(--bg-overlay)] rounded w-2/3 mb-3" />
             <div className="h-3 bg-[var(--bg-overlay)] rounded w-1/3" />

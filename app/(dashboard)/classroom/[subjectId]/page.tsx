@@ -45,7 +45,7 @@ function ClassCard({ cls, subjectId }: { cls: Class; subjectId: string }) {
   const hasHomework = Boolean(cls.homework_markdown?.trim());
 
   return (
-    <div className="rounded-xl border border-[var(--border-card)] bg-[var(--bg-surface)] p-6 transition-all duration-200 ease-out hover:border-[var(--accent)]/30 hover:bg-[var(--bg-hover)]">
+    <div className="rounded-xl border border-[var(--border-card)] bg-[var(--bg-surface)] p-6 shadow-[var(--shadow-card)] transition-all duration-200 ease-out hover:border-[var(--accent)]/30 hover:bg-[var(--bg-hover)]">
       <div className="flex flex-wrap items-center gap-2 mb-2">
         <span className="inline-flex items-center rounded-full bg-[var(--accent)] px-3 py-1 text-sm font-bold text-white">
           Class {cls.order_index}

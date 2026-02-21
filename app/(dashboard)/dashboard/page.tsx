@@ -64,7 +64,7 @@ export default async function DashboardPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-8 py-12">
-      <h1 className="text-2xl font-semibold tracking-tight text-[var(--text-primary)] mb-2">
+      <h1 className="text-3xl font-semibold tracking-tight text-[var(--accent)] mb-2">
         {greeting}
       </h1>
 
@@ -81,7 +81,7 @@ export default async function DashboardPage() {
           <p className="text-[var(--text-secondary)]">
             You don&apos;t have any subjects yet. Add your first subject to get a syllabus and start learning.
           </p>
-          <Card className="max-w-xl rounded-xl border-[var(--border-card)] bg-[var(--bg-surface)] p-6 shadow-none transition-all duration-200 ease-out">
+          <Card className="max-w-xl rounded-xl border-[var(--border-card)] bg-[var(--bg-surface)] p-6 shadow-[var(--shadow-card)] transition-all duration-200 ease-out">
             <CardHeader className="space-y-2 p-0 pb-6">
               <CardTitle className="text-2xl font-semibold tracking-tight text-[var(--text-primary)]">
                 Add Subject
@@ -97,7 +97,7 @@ export default async function DashboardPage() {
         </div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <Card className="rounded-xl border-[var(--border-card)] bg-[var(--bg-surface)] p-6 shadow-none transition-all duration-200 ease-out">
+          <Card className="rounded-xl border-[var(--border-card)] bg-[var(--bg-surface)] p-6 shadow-[var(--shadow-card)] transition-all duration-200 ease-out">
             <CardHeader className="space-y-2 p-0 pb-6">
               <CardTitle className="text-2xl font-semibold tracking-tight text-[var(--text-primary)]">
                 Add Subject
@@ -111,7 +111,7 @@ export default async function DashboardPage() {
             </CardContent>
           </Card>
 
-          <div className="rounded-xl border border-[var(--border-card)] bg-[var(--bg-surface)] p-6">
+          <div className="rounded-xl border border-[var(--border-card)] bg-[var(--bg-surface)] p-6 shadow-[var(--shadow-card)]">
             <h2 className="text-lg font-semibold tracking-tight text-[var(--text-primary)] mb-4">
               Recent subjects
             </h2>

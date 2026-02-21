@@ -6,7 +6,7 @@ export default function SubjectDetailLoading() {
         {[1, 2, 3].map((i) => (
           <div
             key={i}
-            className="rounded-xl border border-[var(--border-card)] bg-[var(--bg-surface)] p-6 animate-pulse"
+            className="rounded-xl border border-[var(--border-card)] bg-[var(--bg-surface)] p-6 shadow-[var(--shadow-card)] animate-pulse"
           >
             <div className="h-4 bg-[var(--bg-overlay)] rounded w-20 mb-3" />
             <div className="h-6 bg-[var(--bg-overlay)] rounded w-3/4 mb-4" />

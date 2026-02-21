@@ -15,7 +15,7 @@ export default async function ClassroomPage() {
       </h1>
 
       {subjects.length === 0 ? (
-        <div className="rounded-xl border border-[var(--border-card)] bg-[var(--bg-surface)] p-12 text-center">
+        <div className="rounded-xl border border-[var(--border-card)] bg-[var(--bg-surface)] p-12 text-center shadow-[var(--shadow-card)]">
           <p className="text-[var(--text-secondary)] mb-4">No subjects yet</p>
           <Link
             href="/dashboard"
@@ -30,7 +30,7 @@ export default async function ClassroomPage() {
             <Link
               key={subject.id}
               href={`/classroom/${subject.id}`}
-              className="rounded-xl border border-[var(--border-card)] bg-[var(--bg-surface)] p-6 transition-all duration-200 ease-out hover:border-[var(--accent)]/30 hover:bg-[var(--bg-hover)] hover:shadow-[0_0_24px_rgba(29,86,201,0.08)] cursor-pointer no-underline"
+              className="rounded-xl border border-[var(--border-card)] bg-[var(--bg-surface)] p-6 shadow-[var(--shadow-card)] transition-all duration-200 ease-out hover:border-[var(--accent)]/30 hover:bg-[var(--bg-hover)] cursor-pointer no-underline"
             >
               <h2 className="text-lg font-semibold tracking-tight text-[var(--text-primary)]">
                 {subject.name}
